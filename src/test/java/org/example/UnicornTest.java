@@ -79,4 +79,27 @@ public class UnicornTest {
                 .assertThat()
                 .statusCode(404);
     }
+
+    @Test
+    public void userShouldBeAbleToUpdateUnicornName() throws IOException {
+        // ШАГ 1: СОЗДАНИЕ СУЩНОСТИ (единорога)
+        String unicornId = UnicornRequests.createUnicorn("Original Name", "Purple");
+
+        // ШАГ 2: ОБНОВЛЕНИЕ ИМЕНИ
+        String newName = "Updated Name";
+        UnicornRequests.updateUnicornName(unicornId, newName);
+
+        // ШАГ 3: ПРОВЕРКА, ЧТО ИМЯ ОБНОВИЛОСЬ
+        String response = UnicornRequests.getUnicorn(unicornId);
+        String actualName = RestAssured.given()
+                .when()
+                .get("/unicorn/" + unicornId)
+                .then()
+                .extract()
+                .jsonPath()
+                .getString("name");
+
+        // Проверка, что имя было обновлено на новое
+        assertEquals(newName, actualName, "Имя единорога не было обновлено корректно!");
+    }
 }

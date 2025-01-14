@@ -84,5 +84,11 @@ public class UnicornRequests {
     public static String getUnicorn(String unicornId) {
         return sendGetRequest("/unicorn/" + unicornId);
     }
+
+    // Метод для обновления имени Unicorn
+    public static void updateUnicornName(String unicornId, String newName) {
+        String requestBody = "{\"name\": \"" + newName + "\"}";
+        sendPutRequest("/unicorn/" + unicornId, requestBody);
+    }
 }
 
