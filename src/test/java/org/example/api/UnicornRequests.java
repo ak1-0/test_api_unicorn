@@ -27,6 +27,18 @@ public class UnicornRequests {
                 .path("_id");                  // Извлекаем ID из ответа
     }
 
+    public static void updateTailColor(String unicornId, String newTailColor) {
+        RestAssured.given()
+                .contentType(ContentType.JSON)
+                .body("{\"tailColor\": \"" + newTailColor + "\"}")
+                .when()
+                .put("/unicorn/" + unicornId)
+                .then()
+                .assertThat()
+                .statusCode(200);  // Ожидаем, что сервер вернет статус 200 (OK)
+    }
+
+
 
     public static void deleteUnicorn(String unicornId) {
         RestAssured.given()
