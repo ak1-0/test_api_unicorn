@@ -10,13 +10,13 @@ Content-Type: application/json
 ###
 
 ### Получение сущности Unicorn
-GET https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+GET https://crudcrud.com/api/f4eea4776c304000897bf64696fef563/unicorn/67868ebff9e0f703e867618f
 Accept: application/json
 
 ###
 
 ### Изменение цвета хвоста Unicorn
-PUT https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+PUT https://crudcrud.com/api/f4eea4776c304000897bf64696fef563/unicorn/67868ebff9e0f703e867618f
 Content-Type: application/json
 
 {
@@ -27,5 +27,5 @@ Content-Type: application/json
 ###
 
 ### Удаление сущности Unicorn
-DELETE https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+DELETE https://crudcrud.com/api/f4eea4776c304000897bf64696fef563/unicorn/67868ebff9e0f703e867618f
 Accept: application/json

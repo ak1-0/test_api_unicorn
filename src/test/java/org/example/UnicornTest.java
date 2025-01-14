@@ -9,7 +9,6 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 
 import java.io.IOException;
-import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UnicornTest {
@@ -17,7 +16,7 @@ public class UnicornTest {
     @BeforeAll
     public static void setup() {
         // Настройка RestAssured перед запуском тестов
-        RestAssured.baseURI = "https://crudcrud.com/api/bd3e9ccb2a7e438ea573d991b4f885f9"; // Указываем базовый URL API
+        RestAssured.baseURI = "https://crudcrud.com/api/f4eea4776c304000897bf64696fef563"; // Указываем базовый URL API
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter()); // Логируем запросы и ответы
     }
 
@@ -29,19 +28,18 @@ public class UnicornTest {
         // Проверяем, что ID не пустой
         assertNotNull(unicornId, "ID не должен быть пустым!");
         assertFalse(unicornId.isEmpty(), "ID не должен быть пустым!");
+
+        // Дополнительная проверка, что API действительно возвращает не пустой ответ
+        String response = RestAssured.given()
+                .when()
+                .get("/unicorn/" + unicornId)
+                .then()
+                .extract()
+                .asString();
+
+        assertNotNull(response, "Ответ не должен быть пустым!");
+        assertFalse(response.isEmpty(), "Ответ от API не должен быть пустым!");
     }
-
-    // @Test
-    // void testIsItRightCreatedUnicorn() {
-        // Шаг 1: Создаем объект Unicorn с именем и цветом хвоста
-    // Unicorn unicorn = new Unicorn("Sparkle", "Rainbow");
-
-        // Шаг 2: Проверяем, что имя было задано верно
-    // assertEquals("Sparkle", unicorn.name, "Имя не совпадает!");
-
-        // Шаг 3: Проверяем, что цвет хвоста был задан верно
-    // assertEquals("Rainbow", unicorn.tailColor, "Цвет хвоста не совпадает!");
-    // }
 
     @Test
     public void userShouldBeAbleChangeTailColor() throws IOException {
@@ -75,7 +73,7 @@ public class UnicornTest {
 
 
     @Test public void userShouldBeAbleDeleteExistingUnicorn()
-        throws IOException {
+            throws IOException {
         // ШАГ 1: СОЗДАНИЕ UNICORN
         String unicornId = UnicornRequests.createUnicorn("Rarity", "Purple");
         // ШАГ 2: УДАЛЕНИЕ UNICORN
@@ -87,7 +85,5 @@ public class UnicornTest {
                 .then()
                 .assertThat()
                 .statusCode(404);
-        //.extract()
-        //.asString();
-        }
+    }
 }

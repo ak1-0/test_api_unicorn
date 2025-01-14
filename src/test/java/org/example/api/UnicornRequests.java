@@ -4,6 +4,8 @@ import io.restassured.RestAssured;
 import io.restassured.http.ContentType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.example.api.models.Unicorn;
+import org.example.utils.JsonMapper;
+
 import java.io.IOException;
 
 public class UnicornRequests {
