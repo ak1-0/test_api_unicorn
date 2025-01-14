@@ -19,7 +19,7 @@ public class UnicornTest {
     @BeforeAll
     public static void setup() {
         // Настройка RestAssured перед запуском тестов
-        RestAssured.baseURI = "https://crudcrud.com/api/f4eea4776c304000897bf64696fef563"; // Указываем базовый URL API
+        RestAssured.baseURI = "https://crudcrud.com/api/447bcc18808447008618558b288944f6"; // Указываем базовый URL API
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter()); // Логируем запросы и ответы
     }
 
