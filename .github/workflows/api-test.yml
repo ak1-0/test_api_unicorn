@@ -16,11 +16,12 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v3
 
-      - name: Set up Gradle
-        uses: gradle/wrapper-validation-action@v1
+      - name: Install Gradle
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y gradle
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run tests with Gradle
-        run: ./gradlew test
+      - name: Run Gradle build and tests
+        run: |
+          gradle clean build
+          gradle test
