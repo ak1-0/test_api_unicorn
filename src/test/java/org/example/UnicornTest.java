@@ -26,8 +26,10 @@ public class UnicornTest {
         String unicornId = UnicornRequests.createUnicorn("Twilight Sparkle", "Pink");
 
         // Проверяем, что ID не пустой
-        assertNotNull(unicornId, "ID не должен быть пустым!");
-        assertFalse(unicornId.isEmpty(), "ID не должен быть пустым!");
+        assertAll(
+                () -> assertNotNull(unicornId, "ID не должен быть пустым!"),
+                () -> assertFalse(unicornId.isEmpty(), "ID не должен быть пустым!")
+        );
 
         // Дополнительная проверка, что API действительно возвращает не пустой ответ
         String response = RestAssured.given()
@@ -50,15 +52,7 @@ public class UnicornTest {
         String newTailColor = "Blue";
         UnicornRequests.updateTailColor(unicornId, newTailColor);
 
-        // ШАГ 3: ПРОВЕРКА, ЧТО ЦВЕТ ХВОСТА ИЗМЕНИЛСЯ
-        String response = RestAssured.given()
-                .when()
-                .get("/unicorn/" + unicornId)
-                .then()
-                .extract()
-                .asString();
-
-        // Использование jsonPath для извлечения tailColor из JSON ответа
+        // Однократный запрос для получения ответа
         String actualTailColor = RestAssured.given()
                 .when()
                 .get("/unicorn/" + unicornId)
@@ -71,9 +65,8 @@ public class UnicornTest {
         assertEquals(newTailColor, actualTailColor, "Цвет хвоста не был изменен корректно!");
     }
 
-
-    @Test public void userShouldBeAbleDeleteExistingUnicorn()
-            throws IOException {
+    @Test
+    public void userShouldBeAbleDeleteExistingUnicorn() throws IOException {
         // ШАГ 1: СОЗДАНИЕ UNICORN
         String unicornId = UnicornRequests.createUnicorn("Rarity", "Purple");
         // ШАГ 2: УДАЛЕНИЕ UNICORN
