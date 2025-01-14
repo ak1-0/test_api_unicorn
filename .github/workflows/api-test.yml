@@ -17,10 +17,13 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Set up JDK 11
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v2 
         with:
           java-version: '11'
           distribution: 'adoptium'
+
+      - name: Check Maven version
+        run: mvn -v 
 
       - name: Build with Maven
         run: mvn clean install
