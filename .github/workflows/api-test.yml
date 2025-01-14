@@ -1,4 +1,4 @@
-name: Java CI with Gradle
+name: Build and Test with Gradle
 
 on:
   push:
@@ -22,16 +22,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
-      - name: Cache Gradle dependencies
-        uses: actions/cache@v2
-        with:
-          path: ~/.gradle/caches
-          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
-          restore-keys: |
-            ${{ runner.os }}-gradle-
+      - name: Set execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
 
-      - name: Build with Gradle
-        run: ./gradlew build
-
-      - name: Run tests with Gradle
-        run: ./gradlew test
+      - name: Run Gradle wrapper to build and test
+        run: ./gradlew clean build test
