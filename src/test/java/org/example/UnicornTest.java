@@ -1,15 +1,14 @@
 package org.example;
 
-import io.restassured.RestAssured;
-import io.restassured.filter.log.RequestLoggingFilter;
-import io.restassured.filter.log.ResponseLoggingFilter;
-import io.restassured.http.ContentType;
+import org.example.api.UnicornRequests;
 import org.example.api.models.Unicorn;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-
-import static org.hamcrest.Matchers.equalTo;
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import io.restassured.RestAssured;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
+import java.io.IOException;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UnicornTest {
 
@@ -21,23 +20,13 @@ public class UnicornTest {
     }
 
     @Test
-    public void userShouldBeAbleCreateUnicorn() {
-        // Тело запроса для создания Unicorn
-        String requestBody = """
-                {
-                  "name": "Twilight Sparkle",
-                  "tailColor": "Pink"
-                }
-                """;
+    public void userShouldBeAbleCreateUnicorn() throws IOException {
+        // Вызов метода создания Unicorn
+        String unicornId = UnicornRequests.createUnicorn("Twilight Sparkle", "Pink");
 
-        // Отправка POST-запроса и проверка ответа
-        RestAssured.given()
-                .contentType(ContentType.JSON) // Указываем, что отправляем JSON
-                .body(requestBody)             // Передаём тело запроса
-                .when()
-                .post("/unicorn")              // Отправляем POST-запрос на создание Unicorn
-                .then()
-                .statusCode(201);              // Проверяем, что ответ имеет статус 201 Created
+        // Проверяем, что ID не пустой
+        assertNotNull(unicornId, "ID не должен быть пустым!");
+        assertFalse(unicornId.isEmpty(), "ID не должен быть пустым!");
     }
 
     @Test
