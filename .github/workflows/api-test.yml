@@ -22,5 +22,8 @@ jobs:
           java-version: '11'
           distribution: 'temurin'
 
+      - name: Set execute permission for Gradle wrapper
+        run: chmod +x ./gradlew
+
       - name: Run Gradle wrapper to build and test
         run: ./gradlew clean build test
