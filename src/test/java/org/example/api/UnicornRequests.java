@@ -15,15 +15,26 @@ public class UnicornRequests {
 
         // Отправляем запрос и возвращаем ID созданного Unicorn
         return RestAssured.given()
-                .contentType(ContentType.JSON) // Указываем, что отправляем JSON
-                .body(requestBody)             // Передаём тело запроса
+                //.accept(ContentType.JSON) // Указываем, что ожидаем JSON в ответе
+                .contentType(ContentType.JSON)
+                .body(requestBody)
                 .when()
-                .post("/unicorn")              // Отправляем запрос на конечную точку
+                .post("/unicorn")
                 .then()
                 .assertThat()
-                .statusCode(201)               // Проверяем, что ответ — 201 Created
+                .statusCode(201)
                 .extract()
                 .path("_id");                  // Извлекаем ID из ответа
+    }
+
+
+    public static void deleteUnicorn(String unicornId) {
+        RestAssured.given()
+                .when()
+                .delete("/unicorn/" + unicornId)
+                .then()
+                .assertThat()
+                .statusCode(200); // Ожидаем, что сервер возвращает 200 при удалении
     }
 }
 

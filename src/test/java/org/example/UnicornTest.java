@@ -7,7 +7,9 @@ import org.junit.jupiter.api.Test;
 import io.restassured.RestAssured;
 import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
+
 import java.io.IOException;
+import static io.restassured.RestAssured.given;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UnicornTest {
@@ -15,7 +17,7 @@ public class UnicornTest {
     @BeforeAll
     public static void setup() {
         // Настройка RestAssured перед запуском тестов
-        RestAssured.baseURI = "https://crudcrud.com/api/d455de6fe2354674841491bcc4778825"; // Указываем базовый URL API
+        RestAssured.baseURI = "https://crudcrud.com/api/bd3e9ccb2a7e438ea573d991b4f885f9"; // Указываем базовый URL API
         RestAssured.filters(new RequestLoggingFilter(), new ResponseLoggingFilter()); // Логируем запросы и ответы
     }
 
@@ -40,4 +42,22 @@ public class UnicornTest {
         // Шаг 3: Проверяем, что цвет хвоста был задан верно
         assertEquals("Rainbow", unicorn.tailColor, "Цвет хвоста не совпадает!");
     }
+
+
+    @Test public void userShouldBeAbleDeleteExistingUnicorn()
+        throws IOException {
+        // ШАГ 1: СОЗДАНИЕ UNICORN
+        String unicornId = UnicornRequests.createUnicorn("Rarity", "Purple");
+        // ШАГ 2: УДАЛЕНИЕ UNICORN
+        UnicornRequests.deleteUnicorn(unicornId);
+        // ШАГ 3: ПРОВЕРКА, ЧТО UNICORN НЕ СУЩЕСТВУЕТ
+        RestAssured.given()
+                .when()
+                .get("/unicorn/" + unicornId)
+                .then()
+                .assertThat()
+                .statusCode(404);
+        //.extract()
+        //.asString();
+        }
 }
