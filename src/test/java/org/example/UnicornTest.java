@@ -1,7 +1,6 @@
 package org.example;
 
 import org.example.api.UnicornRequests;
-import org.example.api.models.Unicorn;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import io.restassured.RestAssured;
@@ -9,9 +8,13 @@ import io.restassured.filter.log.RequestLoggingFilter;
 import io.restassured.filter.log.ResponseLoggingFilter;
 
 import java.io.IOException;
+
+import static org.hamcrest.Matchers.lessThan;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UnicornTest {
+
+    private Object ContentType;
 
     @BeforeAll
     public static void setup() {
@@ -101,5 +104,24 @@ public class UnicornTest {
 
         // Проверка, что имя было обновлено на новое
         assertEquals(newName, actualName, "Имя единорога не было обновлено корректно!");
+    }
+
+    @Test
+    public void shouldReturnNotFoundWhenUnicornDoesNotExist() {
+        RestAssured.given()
+                .when()
+                .get("/unicorn/nonexistent_id")
+                .then()
+                .statusCode(404); // Ожидаем 404 Not Found
+    }
+
+    @Test
+    public void testResponseTime() {
+        RestAssured.given()
+                .when()
+                .get("/unicorn")
+                .then()
+                .statusCode(200)
+                .time(lessThan(2000L)); // Время отклика должно быть меньше 2000 мс
     }
 }
