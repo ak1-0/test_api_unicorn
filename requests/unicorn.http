@@ -1,0 +1,31 @@
+### Создание сущности Unicorn
+POST https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn
+Content-Type: application/json
+
+{
+  "name": "Twilight Sparkle",
+  "tailColor": "Pink"
+}
+
+###
+
+### Получение сущности Unicorn
+GET https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+Accept: application/json
+
+###
+
+### Изменение цвета хвоста Unicorn
+PUT https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+Content-Type: application/json
+
+{
+  "name": "Twilight Sparkle",
+  "tailColor": "Blue"
+}
+
+###
+
+### Удаление сущности Unicorn
+DELETE https://crudcrud.com/api/ed08de3cfbc14f1bb3d33b035cc1ecbe/unicorn/67868ebff9e0f703e867618f
+Accept: application/json
